@@ -42,12 +42,16 @@ class Util {
                 icon: 'mdi:calendar-month',
                 editable: true
             },
-        ]
+        ];
+
         for (let i in entities) {
             try {
 
+
                 // Verifica se o sensor já existe
                 const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
+
+                console.log('existingSensor', existingSensor.data)
 
                 if (!existingSensor.data) {
                     // Se o sensor não existir, cria-o
@@ -58,6 +62,9 @@ class Util {
                         },
                         { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
                     );
+
+                    console.log('response', response.data)
+
                     console.log(`Sensor ${entities[i]} created.`);
                 } else {
                     console.log(`Sensor ${entities[i]} already exists.`);
