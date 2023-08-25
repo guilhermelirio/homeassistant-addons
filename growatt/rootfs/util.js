@@ -18,6 +18,8 @@ class Util {
                 data['Cookie'] = getCookies.headers['set-cookie'].toString();
                 data['mesAtual'] = new Date().toISOString().substr(0, 7);
 
+                console.log('Login accepted.')
+
                 return { error: false, msg: 'ok', data };
             }
 

@@ -6,7 +6,13 @@ const Util = require('./util');
 
     const dados = await Util.getData();
 
-    await Util.login(dados.login, dados.password);
+    const requestLogin = await Util.login(dados.login, dados.password);
+
+    if (requestLogin.error) {
+        throw new Error(requestLogin.msg);
+    }
+
+    await Util.getEnergy(requestLogin.data)
 
 })();
 
