@@ -40,7 +40,7 @@ class Util {
                 editable: true
             },
         ]
-        for (let x in entities) {
+        for (let i in entities) {
             try {
 
                 // Verifica se o sensor já existe
