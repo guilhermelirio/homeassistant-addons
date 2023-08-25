@@ -15,7 +15,7 @@
 
 2. Install add-on ( Growatt )<br />
 
-[![Open your Home Assistant instance and show the dashboard of a Supervisor add-on.](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?addon=c50d1fa4_growatt&repository_url=https%3A%2F%2Fgithub.com%2Fguilhermelirio%2Fhomeassistant-addons)
+[![Open your Home Assistant instance and show the dashboard of a Supervisor add-on.](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?addon=d2df4a6f_growatt_addon&repository_url=https%3A%2F%2Fgithub.com%2Fguilhermelirio%2Fhomeassistant-addons)
 
 - Press "Install"
 
