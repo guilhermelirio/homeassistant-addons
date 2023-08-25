@@ -63,17 +63,17 @@ class Util {
 
             try {
                 // Verifica se o sensor já existe
-                await axios.get(`${SUPERVISOR}${entityName}`, {
+                await axios.get(`${SUPERVISOR}${entities[i]}`, {
                     headers: { Authorization: 'Bearer ' + process.env.SUPERVISOR_TOKEN },
                 });
 
-                console.log(`Sensor ${entityName} already exists.`);
+                console.log(`Sensor ${entities[i]} already exists.`);
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     // Trate o erro 404 (Not Found) aqui
                     try {
                         const response = await axios.post(
-                            `${SUPERVISOR}${entityName}`,
+                            `${SUPERVISOR}${entities[i]}`,
                             {
                                 state: 0,
                                 attributes: stateAttributes,
@@ -83,12 +83,12 @@ class Util {
 
                         console.log('response', response.data);
 
-                        console.log(`Sensor ${entityName} created.`);
+                        console.log(`Sensor ${entities[i]} created.`);
                     } catch (createError) {
-                        console.error(`Error creating sensor ${entityName}: ${createError}`);
+                        console.error(`Error creating sensor ${entities[i]}: ${createError}`);
                     }
                 } else {
-                    console.error(`Error checking sensor ${entityName}: ${error}`);
+                    console.error(`Error checking sensor ${entities[i]}: ${error}`);
                 }
             }
         }
