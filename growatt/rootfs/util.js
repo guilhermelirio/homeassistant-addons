@@ -26,7 +26,7 @@ class Util {
                 min: 0,
                 step: 1,
                 unit_of_measurement: 'KWh',
-                mode: box,
+                mode: 'box',
                 icon: 'mdi:calendar-clock',
                 editable: true
             },
@@ -35,7 +35,7 @@ class Util {
                 min: 0,
                 step: 1,
                 unit_of_measurement: 'KWh',
-                mode: box,
+                mode: 'box',
                 icon: 'mdi:calendar-month',
                 editable: true
             },
