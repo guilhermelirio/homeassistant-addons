@@ -72,13 +72,12 @@ class Util {
                 if (error.response && error.response.status === 404) {
                     // Trate o erro 404 (Not Found) aqui
                     try {
-                        const response = await axios.post(
-                            `${SUPERVISOR}${entities[i]}`,
+                        const response = await axios.post(`${SUPERVISOR}${entities[i]}`,
+                            { headers: { "Authorization": 'Bearer ' + process.env.SUPERVISOR_TOKEN, "Content-Type": "application/json" } },
                             {
                                 state: 0,
                                 attributes: stateAttributes,
-                            },
-                            { headers: { Authorization: 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
+                            }
                         );
 
                         console.log('response', response.data);
