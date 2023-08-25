@@ -11,19 +11,15 @@ class Util {
         if (!fs.existsSync(filePath)) throw new Error("Arquivo options.json não existe.");
 
         const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const { login, password, token } = jsonData;
+        const { login, password } = jsonData;
 
         if (login == "" || password == "") throw new Error("Preencha os campos nas configurações do addon.");
 
-        return { error: false, login, password, token };
+        return { error: false, login, password };
     }
 
 
     async createSensor() {
-
-        const data = await this.getData();
-
-        console.log(data);
 
         const entities = ['sensor.daily_generation', 'sensor.monthly_generation'];
 
@@ -51,7 +47,7 @@ class Util {
             try {
 
                 // Verifica se o sensor já existe
-                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + data.token } });
+                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
 
                 if (!existingSensor.data) {
                     // Se o sensor não existir, cria-o
@@ -60,7 +56,7 @@ class Util {
                             state: 0,
                             attributes: stateAttributes,
                         },
-                        { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + data.token } }
+                        { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
                     );
                     console.log(`Sensor ${entities[i]} created.`);
                 } else {
