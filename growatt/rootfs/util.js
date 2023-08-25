@@ -2,6 +2,7 @@ const axios = require('axios');
 const SUPERVISOR = 'http://supervisor/core/api/states/';
 const fs = require('fs');
 const path = require('path');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 class Util {
 

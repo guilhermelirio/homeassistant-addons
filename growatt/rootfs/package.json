@@ -1,6 +1,6 @@
 {
     "name": "growatt",
-    "version": "0.0.8.4",
+    "version": "0.0.8.5",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -10,6 +10,7 @@
     "author": "Guilherme Lirio Tomasi de Oliveira",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.25.0"
+        "axios": "^0.25.0",
+        "node-fetch": "^3.3.0"
     }
 }
