@@ -36,7 +36,7 @@ class Util {
             {
                 "friendly_name": 'Monthly Energy Generation',
                 "min": 0,
-                step: 1,
+                "step": 1,
                 "unit_of_measurement": 'KWh',
                 "mode": 'box',
                 "icon": 'mdi:calendar-month',
@@ -45,32 +45,42 @@ class Util {
         ];
 
         for (let i in entities) {
+
             try {
-                // Verifica se o sensor já existe
                 const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
 
-                console.log('existingSensor', existingSensor.data)
-
-                if (!existingSensor.data) {
-                    // Se o sensor não existir, cria-o
-                    const response = await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
-                        {
-                            "state": 0,
-                            "attributes": stateAttributes,
-                        },
-                        { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
-                    );
-
-                    console.log('response', response.data)
-
-                    console.log(`Sensor ${entities[i]} created.`);
-                } else {
-                    console.log(`Sensor ${entities[i]} already exists.`);
-                }
+                console.log(existingSensor)
 
             } catch (error) {
-                console.error(`Error checking/creating sensor ${entities[i]}: ${error}`);
+                console.log(error)
             }
+
+            // try {
+            //     // Verifica se o sensor já existe
+            //     const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
+
+            //     console.log('existingSensor', existingSensor.data)
+
+            //     if (!existingSensor.data) {
+            //         // Se o sensor não existir, cria-o
+            //         const response = await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
+            //             {
+            //                 "state": 0,
+            //                 "attributes": stateAttributes,
+            //             },
+            //             { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
+            //         );
+
+            //         console.log('response', response.data)
+
+            //         console.log(`Sensor ${entities[i]} created.`);
+            //     } else {
+            //         console.log(`Sensor ${entities[i]} already exists.`);
+            //     }
+
+            // } catch (error) {
+            //     console.error(`Error checking/creating sensor ${entities[i]}: ${error}`);
+            // }
         }
     }
 
