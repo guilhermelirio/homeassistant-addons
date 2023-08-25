@@ -11,7 +11,7 @@
 
 - Click Supervisor > Add-ons Store<br />
 - Click on the 3-dots button at the top right side and then Repositories<br />
-- Copy and paste https://github.com/w35l3y/hassio-addons and then press Add<br />
+- Copy and paste https://github.com/guilhermelirio/homeassistant-addons and then press Add<br />
 
 2. Install add-on ( Growatt )<br />
 

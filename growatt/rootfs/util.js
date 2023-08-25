@@ -1,5 +1,7 @@
 const axios = require('axios');
 const SUPERVISOR = 'http://supervisor/core/api/states/';
+const fs = require('fs');
+const path = require('path');
 
 class Util {
 
@@ -44,14 +46,17 @@ class Util {
             try {
 
                 // Verifica se o sensor já existe
-                const existingSensor = await axios.get(`${SUPERVISOR}${entities[i]}`);
+                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json' } });
 
                 if (!existingSensor.data) {
                     // Se o sensor não existir, cria-o
-                    await axios.post(`${SUPERVISOR}${entities[i]}`, {
-                        state: 0,
-                        attributes: stateAttributes,
-                    });
+                    await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
+                        {
+                            state: 0,
+                            attributes: stateAttributes,
+                        },
+                        { headers: { 'Content-Type': 'application/json' } }
+                    );
                     console.log(`Sensor ${entities[i]} created.`);
                 } else {
                     console.log(`Sensor ${entities[i]} already exists.`);
