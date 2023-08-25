@@ -40,22 +40,22 @@ class Util {
 
         const stateAttributes = [
             {
-                friendly_name: 'Daily Energy Generation',
-                min: 0,
-                step: 1,
-                unit_of_measurement: 'KWh',
-                mode: 'box',
-                icon: 'mdi:calendar-clock',
-                editable: true
+                "friendly_name": 'Daily Energy Generation',
+                "min": 0,
+                "step": 1,
+                "unit_of_measurement": 'KWh',
+                "mode": 'box',
+                "icon": 'mdi:calendar-clock',
+                "editable": true
             },
             {
-                friendly_name: 'Monthly Energy Generation',
-                min: 0,
-                step: 1,
-                unit_of_measurement: 'KWh',
-                mode: 'box',
-                icon: 'mdi:calendar-month',
-                editable: true
+                "friendly_name": 'Monthly Energy Generation',
+                "min": 0,
+                "step": 1,
+                "unit_of_measurement": 'KWh',
+                "mode": 'box',
+                "icon": 'mdi:calendar-month',
+                "editable": true
             },
         ];
 
@@ -68,6 +68,7 @@ class Util {
                 });
 
                 console.log(`Sensor ${entities[i]} already exists.`);
+
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     // Trate o erro 404 (Not Found) aqui
@@ -75,8 +76,8 @@ class Util {
                         const response = await axios.post(`${SUPERVISOR}${entities[i]}`,
                             { headers: { "Authorization": 'Bearer ' + process.env.SUPERVISOR_TOKEN, "Content-Type": "application/json" } },
                             {
-                                state: 0,
-                                attributes: stateAttributes[i],
+                                "state": 0,
+                                "attributes": stateAttributes[i],
                             }
                         );
 
@@ -84,7 +85,7 @@ class Util {
 
                         console.log(`Sensor ${entities[i]} created.`);
                     } catch (createError) {
-                        console.log(createError)
+                        console.log(createError.response.data)
                         console.error(`Error creating sensor ${entities[i]}: ${createError}`);
                     }
                 } else {
