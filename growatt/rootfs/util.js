@@ -36,6 +36,8 @@ class Util {
 
     async createSensor() {
 
+        const token = process.env.SUPERVISOR_TOKEN;
+
         const entities = ['sensor.daily_generation', 'sensor.monthly_generation'];
 
         const stateAttributes = [
@@ -61,20 +63,29 @@ class Util {
 
         for (let i in entities) {
 
+
             try {
                 // Verifica se o sensor já existe
                 await axios.get(`${SUPERVISOR}${entities[i]}`, {
-                    headers: { Authorization: 'Bearer ' + process.env.SUPERVISOR_TOKEN },
+                    headers: { Authorization: 'Bearer ' + token },
                 });
 
                 console.log(`Sensor ${entities[i]} already exists.`);
 
             } catch (error) {
                 if (error.response && error.response.status === 404) {
+
+                    console.log(`Sensor ${entities[i]} not exists. Creating...`);
+
                     // Trate o erro 404 (Not Found) aqui
                     try {
                         const response = await axios.post(`${SUPERVISOR}${entities[i]}`,
-                            { headers: { "Authorization": 'Bearer ' + process.env.SUPERVISOR_TOKEN, "Content-Type": "application/json" } },
+                            {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: 'Bearer ' + token
+                                }
+                            },
                             {
                                 "state": 0,
                                 "attributes": stateAttributes[i],
