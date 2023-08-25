@@ -46,8 +46,6 @@ class Util {
 
         for (let i in entities) {
             try {
-
-
                 // Verifica se o sensor já existe
                 const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
 

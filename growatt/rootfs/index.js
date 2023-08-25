@@ -4,7 +4,7 @@ const Util = require('./util');
 
     await Util.createSensor();
 
-    await this.getData();
+    await Util.getData();
 
 })();
 
