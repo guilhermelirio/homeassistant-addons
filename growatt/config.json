@@ -24,6 +24,6 @@
     "schema": {
       "login": "str",
       "password": "str",
-      "token": "str",
+      "token": "str"
     }
   }
