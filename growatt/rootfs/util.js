@@ -55,7 +55,7 @@ class Util {
 
                 if (!existingSensor.data) {
                     // Se o sensor não existir, cria-o
-                    await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
+                    const response = await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
                         {
                             state: 0,
                             attributes: stateAttributes,
