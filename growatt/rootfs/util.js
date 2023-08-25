@@ -11,7 +11,7 @@ class Util {
 
             const getCookies = await axios.post(`https://server.growatt.com/login?account=${login}&password=${password}`)
 
-            console.log(getCookies)
+            console.log(getCookies.headers)
             console.log("=======================")
             console.log(getCookies.data)
 
@@ -81,15 +81,15 @@ class Util {
                     try {
                         const response = await axios.post(`${SUPERVISOR}${entities[i]}`,
                             {
+                                "state": 0,
+                                "attributes": stateAttributes[i],
+                            },
+                            {
                                 headers: {
-                                    "Content-Type": "application/json",
+                                    'Content-Type': 'application/json',
                                     Authorization: 'Bearer ' + token
                                 }
                             },
-                            {
-                                "state": 0,
-                                "attributes": stateAttributes[i],
-                            }
                         );
 
                         console.log('response', response.data);

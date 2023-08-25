@@ -1,6 +1,6 @@
 {
     "name": "growatt",
-    "version": "0.0.9.0",
+    "version": "0.0.9.1",
     "description": "Addon para capturar dados de geração da energia solar dos sistemas Growatt",
     "main": "index.js",
     "scripts": {
