@@ -2,7 +2,6 @@ const axios = require('axios');
 const SUPERVISOR = 'http://supervisor/core/api/states/';
 const fs = require('fs');
 const path = require('path');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 class Util {
 
@@ -50,14 +49,7 @@ class Util {
         for (let i in entities) {
 
             try {
-                //const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + token } });
-                const existingSensor = await fetch(`http://supervisor/core/api/states/${entities[i]}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN,
-                    },
-                    body: null
-                });
+                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + token } });
 
                 console.log(existingSensor)
 

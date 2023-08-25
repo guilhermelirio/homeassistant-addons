@@ -1,12 +1,12 @@
 {
     "name": "Growatt",
     "description": "Addon para capturar dados de geração da energia solar dos sistemas Growatt",
-    "version": "0.0.8.5",
+    "version": "0.0.8.6",
     "slug": "growatt_addon",
     "url": "https://github.com/guilhermelirio/homeassistant-addons/tree/master/growatt",
     "startup": "application",
     "boot": "auto",
-    "homeassistant": true,
+    "homeassistant_api": true,
     "host_network": true,
     "panel_icon": "mdi:solar-panel",
     "arch": [
