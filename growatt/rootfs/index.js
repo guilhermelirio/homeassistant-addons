@@ -4,7 +4,5 @@ const Util = require('./util');
 
     await Util.createSensor();
 
-    await Util.verifyOptions();
-
 })();
 
