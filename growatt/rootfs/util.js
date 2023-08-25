@@ -25,29 +25,29 @@ class Util {
 
         const stateAttributes = [
             {
-                friendly_name: 'Daily Energy Generation',
-                min: 0,
-                step: 1,
-                unit_of_measurement: 'KWh',
-                mode: 'box',
-                icon: 'mdi:calendar-clock',
-                editable: true
+                "friendly_name": 'Daily Energy Generation',
+                "min": 0,
+                "step": 1,
+                "unit_of_measurement": 'KWh',
+                "mode": 'box',
+                "icon": 'mdi:calendar-clock',
+                "editable": true
             },
             {
-                friendly_name: 'Monthly Energy Generation',
-                min: 0,
+                "friendly_name": 'Monthly Energy Generation',
+                "min": 0,
                 step: 1,
-                unit_of_measurement: 'KWh',
-                mode: 'box',
-                icon: 'mdi:calendar-month',
-                editable: true
+                "unit_of_measurement": 'KWh',
+                "mode": 'box',
+                "icon": 'mdi:calendar-month',
+                "editable": true
             },
         ];
 
         for (let i in entities) {
             try {
                 // Verifica se o sensor já existe
-                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
+                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
 
                 console.log('existingSensor', existingSensor.data)
 
@@ -55,8 +55,8 @@ class Util {
                     // Se o sensor não existir, cria-o
                     const response = await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
                         {
-                            state: 0,
-                            attributes: stateAttributes,
+                            "state": 0,
+                            "attributes": stateAttributes,
                         },
                         { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
                     );
