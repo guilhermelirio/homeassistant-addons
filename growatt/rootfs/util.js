@@ -21,6 +21,8 @@ class Util {
 
     async createSensor() {
 
+        const token = process.env.SUPERVISOR_TOKEN.replace(/\r\n/g, '');
+
         const entities = ['sensor.daily_generation', 'sensor.monthly_generation'];
 
         const stateAttributes = [
@@ -47,7 +49,7 @@ class Util {
         for (let i in entities) {
 
             try {
-                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
+                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + token } });
 
                 console.log(existingSensor)
 
