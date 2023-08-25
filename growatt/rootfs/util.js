@@ -76,7 +76,7 @@ class Util {
                             { headers: { "Authorization": 'Bearer ' + process.env.SUPERVISOR_TOKEN, "Content-Type": "application/json" } },
                             {
                                 state: 0,
-                                attributes: stateAttributes,
+                                attributes: stateAttributes[i],
                             }
                         );
 
@@ -84,6 +84,7 @@ class Util {
 
                         console.log(`Sensor ${entities[i]} created.`);
                     } catch (createError) {
+                        console.log(createError)
                         console.error(`Error creating sensor ${entities[i]}: ${createError}`);
                     }
                 } else {
