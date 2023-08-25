@@ -52,9 +52,8 @@ class Util {
             try {
                 //const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + token } });
                 const existingSensor = await fetch(`http://supervisor/core/api/states/${entities[i]}`, {
-                    method: 'POST',
+                    method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN,
                     },
                     body: null
