@@ -4,7 +4,9 @@ const Util = require('./util');
 
     await Util.createSensor();
 
-    await Util.getData();
+    const dados = await Util.getData();
+
+    await Util.login(dados.login, dados.password);
 
 })();
 

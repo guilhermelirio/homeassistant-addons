@@ -5,6 +5,21 @@ const path = require('path');
 
 class Util {
 
+    async login(login, password) {
+
+        try {
+
+            const getCookies = await axios.post(`https://server.growatt.com/login?account=${login}&password=${password}`)
+
+            console.log(getCookies)
+            console.log("=======================")
+            console.log(getCookies.data)
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     async getData() {
         const filePath = path.join(__dirname, 'data', 'options.json');
 
@@ -20,8 +35,6 @@ class Util {
 
 
     async createSensor() {
-
-        const token = process.env.SUPERVISOR_TOKEN;
 
         const entities = ['sensor.daily_generation', 'sensor.monthly_generation'];
 
@@ -50,31 +63,33 @@ class Util {
 
             try {
                 // Verifica se o sensor já existe
-                const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
+                await axios.get(`${SUPERVISOR}${entityName}`, {
+                    headers: { Authorization: 'Bearer ' + process.env.SUPERVISOR_TOKEN },
+                });
 
-                console.log('existingSensor Data', existingSensor.data);
-                console.log('existingSensor Status', existingSensor.status);
-
-                // Se o sensor não existir, cria-o
-                if (existingSensor.status == 404) {
-
-                    const response = await axios.post(`http://supervisor/core/api/states/${entities[i]}`,
-                        { headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } },
-                        {
-                            "state": 0,
-                            "attributes": stateAttributes,
-                        }
-                    );
-
-                    console.log('response', response.data)
-
-                    console.log(`Sensor ${entities[i]} created.`);
-                } else {
-                    console.log(`Sensor ${entities[i]} already exists.`);
-                }
-
+                console.log(`Sensor ${entityName} already exists.`);
             } catch (error) {
-                console.error(`Error checking/creating sensor ${entities[i]}: ${error}`);
+                if (error.response && error.response.status === 404) {
+                    // Trate o erro 404 (Not Found) aqui
+                    try {
+                        const response = await axios.post(
+                            `${SUPERVISOR}${entityName}`,
+                            {
+                                state: 0,
+                                attributes: stateAttributes,
+                            },
+                            { headers: { Authorization: 'Bearer ' + process.env.SUPERVISOR_TOKEN } }
+                        );
+
+                        console.log('response', response.data);
+
+                        console.log(`Sensor ${entityName} created.`);
+                    } catch (createError) {
+                        console.error(`Error creating sensor ${entityName}: ${createError}`);
+                    }
+                } else {
+                    console.error(`Error checking sensor ${entityName}: ${error}`);
+                }
             }
         }
     }
