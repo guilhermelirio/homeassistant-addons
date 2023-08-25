@@ -41,8 +41,8 @@ class Util {
             const energyDailyResponse = responses[0];
             const energyMonthlyResponse = responses[1];
 
-            // console.log('Primeira resposta:', energyDailyResponse.data);
-            // console.log('Segunda resposta:', energyMonthlyResponse.data);
+            console.log('Primeira resposta:', energyDailyResponse.data);
+            console.log('Segunda resposta:', energyMonthlyResponse.data);
 
             if (energyDailyResponse.data.result == 1 && energyMonthlyResponse.data.result) {
 
@@ -80,7 +80,7 @@ class Util {
         return { error: false, login, password };
     }
 
-    async setSensor(sensor, data) {
+    async setSensor(sensor, value) {
 
         const sensors = [
             {
@@ -117,7 +117,7 @@ class Util {
 
                 const response = await axios.post(`${SUPERVISOR}${sensor}`,
                     {
-                        "state": data,
+                        "state": value,
                         "attributes": stateAttributes[i],
                     },
                     {
