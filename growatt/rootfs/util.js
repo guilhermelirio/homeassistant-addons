@@ -53,7 +53,7 @@ class Util {
                 const existingSensor = await axios.get(`http://supervisor/core/api/states/${entities[i]}`, { headers: { 'Authorization': 'Bearer ' + process.env.SUPERVISOR_TOKEN } });
 
                 console.log('existingSensor Data', existingSensor.data);
-                console.log('existingSensor Status', existingSensor.data);
+                console.log('existingSensor Status', existingSensor.status);
 
                 // Se o sensor não existir, cria-o
                 if (existingSensor.status == 404) {
