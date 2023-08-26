@@ -16,7 +16,7 @@ const cron = require('node-cron');
         const dados = await Util.getData();
         const requestLogin = await Util.login(dados.login, dados.password);
         const plant = await Util.getPlantId(requestLogin.data.Cookie);
-        await Util.getEnergy(requestLogin.data, plant.plantId)
+        await Util.getEnergy(requestLogin.data, plant.plantId, dados.serialNumber);
     });
 
 })();

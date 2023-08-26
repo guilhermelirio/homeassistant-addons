@@ -49,7 +49,6 @@ class Util {
             const plantId = await axios.post('https://server.growatt.com/index/getPlantListTitle', null, { headers: { 'Cookie': cookie } })
 
             if (typeof plantId.data === 'object') {
-                console.log(plantId.data)
                 return { error: false, plantId: plantId.data[0].id }
             } else {
                 throw new Error('Verifique seus dados e tente novamente.')
