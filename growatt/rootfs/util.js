@@ -41,10 +41,10 @@ class Util {
             const energyDailyResponse = responses[0];
             const energyMonthlyResponse = responses[1];
 
-            console.log('Primeira resposta:', energyDailyResponse.data);
-            console.log('Segunda resposta:', energyMonthlyResponse.data);
+            //console.log('Primeira resposta:', energyDailyResponse.data);
+            //console.log('Segunda resposta:', energyMonthlyResponse.data);
 
-            if (energyDailyResponse.data.result == 1 && energyMonthlyResponse.data.result) {
+            if (energyDailyResponse.data.result == 1 && energyMonthlyResponse.data.result == 1) {
 
                 let arrayMonthly = energyMonthlyResponse.data.obj.charts.energy;
                 let totalMonthly = 0;
@@ -53,6 +53,9 @@ class Util {
                 for (var i in arrayMonthly) {
                     totalMonthly += arrayMonthly[i];
                 }
+
+                console.log('Diário ', energyDailyResponse.data.obj.eToday);
+                console.log('Mensal ', totalMonthly);
 
                 await this.setSensor('sensor.daily_generation', energyDailyResponse.data.obj.eToday);
                 await this.setSensor('sensor.monthly_generation', totalMonthly.toFixed(2));
