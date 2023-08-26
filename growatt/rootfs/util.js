@@ -121,7 +121,7 @@ class Util {
                 const response = await axios.post(`${SUPERVISOR}${sensor}`,
                     {
                         "state": value,
-                        "attributes": stateAttributes[i],
+                        "attributes": sensorExistis[0].attributes,
                     },
                     {
                         headers: {
@@ -133,7 +133,6 @@ class Util {
 
                 console.log(`Sensor ${sensor} updated.`);
             } catch (createError) {
-                console.log(createError.response.data)
                 console.error(`Error updating sensor ${sensor}: ${createError}`);
             }
         } else {
