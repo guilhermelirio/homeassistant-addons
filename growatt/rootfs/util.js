@@ -31,6 +31,19 @@ class Util {
         }
     }
 
+    async getData() {
+        const filePath = path.join(__dirname, 'data', 'options.json');
+
+        if (!fs.existsSync(filePath)) throw new Error("Arquivo options.json não existe.");
+
+        const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        const { login, password, plantId, tlxSn } = jsonData;
+
+        if (login == "" || password == "") throw new Error("Preencha os campos nas configurações do addon.");
+
+        return { error: false, login, password, plantId, tlxSn };
+    }
+
     async getEnergy(data) {
 
         const urls = ['https://server.growatt.com/panel/tlx/getTLXTotalData?plantId=602355&tlxSn=DXH2B020D4', `https://server.growatt.com/panel/tlx/getTLXEnergyMonthChart?tlxSn=DXH2B020D4&date=${data.mesAtual}&plantId=602355`];
@@ -65,19 +78,6 @@ class Util {
             console.error('Erro:', error);
             return { error: true, daily: null, monthly: null, msg: "Failed to get data." }
         }
-    }
-
-    async getData() {
-        const filePath = path.join(__dirname, 'data', 'options.json');
-
-        if (!fs.existsSync(filePath)) throw new Error("Arquivo options.json não existe.");
-
-        const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const { login, password } = jsonData;
-
-        if (login == "" || password == "") throw new Error("Preencha os campos nas configurações do addon.");
-
-        return { error: false, login, password };
     }
 
     async setSensor(sensor, value) {
@@ -138,7 +138,6 @@ class Util {
             console.log(`Sensor ${sensor} not updated.`);
         }
     }
-
 
     async createSensor() {
 

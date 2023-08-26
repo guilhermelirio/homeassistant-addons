@@ -1,6 +1,6 @@
 {
     "name": "growatt",
-    "version": "0.0.9.7",
+    "version": "0.0.9.8",
     "description": "Addon para capturar dados de geração da energia solar dos sistemas Growatt",
     "main": "index.js",
     "scripts": {
@@ -10,6 +10,7 @@
     "author": "Guilherme Lirio Tomasi de Oliveira",
     "license": "ISC",
     "dependencies": {
-        "axios": "^0.25.0"
+        "axios": "^0.25.0",
+        "node-cron": "^3.0.2"
     }
 }
