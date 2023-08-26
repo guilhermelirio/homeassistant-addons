@@ -11,7 +11,7 @@ class Util {
 
         try {
 
-            const getCookies = await axios.post(`https://server.growatt.com/login?account=${login}&password=${password}`)
+            const getCookies = await axios.post(`https://server.growatt.com/login?account=${login}&password=${password}`);
 
             if (getCookies.data.result == 1) {
 
@@ -21,11 +21,11 @@ class Util {
                 return { error: false, msg: 'ok', data };
             }
 
-            return { error: true, msg: "Erro ao fazer login.", data: null };
+            throw new Error(getCookies.data.msg);
 
         } catch (error) {
-            console.error(error)
-            return { error: true, msg: error.response.data, data: null };
+            console.error(error);
+            throw new Error(error);
         }
     }
 
@@ -35,11 +35,11 @@ class Util {
         if (!fs.existsSync(filePath)) throw new Error("Arquivo options.json não existe.");
 
         const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const { login, password, tlxSn } = jsonData;
+        const { login, password, serialNumber } = jsonData;
 
-        if (login == "" || password == "") throw new Error("Preencha os campos nas configurações do addon.");
+        if (login == "" || password == "" || serialNumber == "") throw new Error("Preencha os campos necessários nas configurações do addon.");
 
-        return { error: false, login, password, tlxSn };
+        return { error: false, login, password, serialNumber };
     }
 
     async getPlantId(cookie) {
@@ -50,21 +50,21 @@ class Util {
 
             if (typeof plantId.data === 'object') {
                 console.log(plantId.data)
-                return { error: false, plantId: plantId.data[0].id, msg: "ok" }
+                return { error: false, plantId: plantId.data[0].id }
             } else {
-                return { error: true, plantId: null, msg: 'Verifique seus dados e tente novamente.' }
+                throw new Error('Verifique seus dados e tente novamente.')
             }
 
         } catch (error) {
             console.log(error);
-            return { error: true, plantId: null, msg: 'Verifique seus dados e tente novamente.' }
+            throw new Error('Verifique seus dados e tente novamente.')
         }
 
     }
 
-    async getEnergy(data, plantId) {
+    async getEnergy(data, plantId, serialNumber) {
 
-        const urls = [`https://server.growatt.com/panel/tlx/getTLXTotalData?plantId=${plantId}&tlxSn=DXH2B020D4`, `https://server.growatt.com/panel/tlx/getTLXEnergyMonthChart?tlxSn=DXH2B020D4&date=${data.mesAtual}&plantId=${plantId}`];
+        const urls = [`https://server.growatt.com/panel/tlx/getTLXTotalData?plantId=${plantId}&tlxSn=${serialNumber}`, `https://server.growatt.com/panel/tlx/getTLXEnergyMonthChart?tlxSn=${serialNumber}&date=${data.mesAtual}&plantId=${plantId}`];
 
         try {
             const responses = await axios.all(urls.map(url => axios.post(url, null, { headers: { 'Cookie': data.Cookie } })));
@@ -90,11 +90,11 @@ class Util {
 
             }
 
-            return { error: true, daily: null, monthly: null }
+            throw new Error('Falha ao obter os dados.');
 
         } catch (error) {
-            console.error('Erro:', error);
-            return { error: true, daily: null, monthly: null, msg: "Failed to get data." }
+            console.error(error);
+            throw new Error('Falha ao obter os dados.');
         }
     }
 
