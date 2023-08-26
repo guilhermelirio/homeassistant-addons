@@ -9,7 +9,7 @@ const cron = require('node-cron');
     const requestLogin = await Util.login(dados.login, dados.password);
     console.log('Login accepted.');
     const plant = await Util.getPlantId(requestLogin.data.Cookie);
-    await Util.getEnergy(requestLogin.data, plant.plantId)
+    await Util.getEnergy(requestLogin.data, plant.plantId, dados.serialNumber);
 
     //Every 10 minutes
     cron.schedule("*/10 * * * *", async () => {
