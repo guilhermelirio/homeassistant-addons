@@ -6,6 +6,7 @@ const cron = require('node-cron');
     await Util.createSensor();
 
     const dados = await Util.getData();
+    console.log(dados)
     const requestLogin = await Util.login(dados.login, dados.password);
     console.log('Login accepted.');
     const plant = await Util.getPlantId(requestLogin.data.Cookie);
