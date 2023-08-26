@@ -20,12 +20,12 @@
       "login": "",
       "password": "",
       "plantId": "",
-      "tlxSn": "",
+      "tlxSn": ""
     },
     "schema": {
       "login": "str",
       "password": "str",
       "plantId": "str",
-      "tlxSn": "str",
+      "tlxSn": "str"
     }
   }
