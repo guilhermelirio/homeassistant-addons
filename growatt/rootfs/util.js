@@ -54,9 +54,6 @@ class Util {
                     totalMonthly += arrayMonthly[i];
                 }
 
-                console.log('Diário ', energyDailyResponse.data.obj.eToday);
-                console.log('Mensal ', totalMonthly);
-
                 await this.setSensor('sensor.daily_generation', energyDailyResponse.data.obj.eToday);
                 await this.setSensor('sensor.monthly_generation', totalMonthly.toFixed(2));
 
@@ -84,6 +81,8 @@ class Util {
     }
 
     async setSensor(sensor, value) {
+
+        const token = process.env.SUPERVISOR_TOKEN;
 
         const sensors = [
             {
