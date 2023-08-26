@@ -18,8 +18,6 @@ class Util {
                 data['Cookie'] = getCookies.headers['set-cookie'].toString();
                 data['mesAtual'] = new Date().toISOString().substr(0, 7);
 
-                console.log('Login accepted.')
-
                 return { error: false, msg: 'ok', data };
             }
 
@@ -37,16 +35,36 @@ class Util {
         if (!fs.existsSync(filePath)) throw new Error("Arquivo options.json não existe.");
 
         const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        const { login, password, plantId, tlxSn } = jsonData;
+        const { login, password, tlxSn } = jsonData;
 
         if (login == "" || password == "") throw new Error("Preencha os campos nas configurações do addon.");
 
-        return { error: false, login, password, plantId, tlxSn };
+        return { error: false, login, password, tlxSn };
     }
 
-    async getEnergy(data) {
+    async getPlantId(cookie) {
 
-        const urls = ['https://server.growatt.com/panel/tlx/getTLXTotalData?plantId=602355&tlxSn=DXH2B020D4', `https://server.growatt.com/panel/tlx/getTLXEnergyMonthChart?tlxSn=DXH2B020D4&date=${data.mesAtual}&plantId=602355`];
+        try {
+
+            const plantId = await axios.post('https://server.growatt.com/index/getPlantListTitle', null, { headers: { 'Cookie': cookie } })
+
+            if (typeof plantId.data === 'object') {
+                console.log(plantId.data)
+                return { error: false, plantId: plantId.data[0].id, msg: "ok" }
+            } else {
+                return { error: true, plantId: null, msg: 'Verifique seus dados e tente novamente.' }
+            }
+
+        } catch (error) {
+            console.log(error);
+            return { error: true, plantId: null, msg: 'Verifique seus dados e tente novamente.' }
+        }
+
+    }
+
+    async getEnergy(data, plantId) {
+
+        const urls = [`https://server.growatt.com/panel/tlx/getTLXTotalData?plantId=${plantId}&tlxSn=DXH2B020D4`, `https://server.growatt.com/panel/tlx/getTLXEnergyMonthChart?tlxSn=DXH2B020D4&date=${data.mesAtual}&plantId=${plantId}`];
 
         try {
             const responses = await axios.all(urls.map(url => axios.post(url, null, { headers: { 'Cookie': data.Cookie } })));
