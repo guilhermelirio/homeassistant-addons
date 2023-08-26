@@ -87,9 +87,9 @@ class Util {
                 await this.setSensor('sensor.daily_generation', energyDailyResponse.data.obj.eToday);
                 await this.setSensor('sensor.monthly_generation', totalMonthly.toFixed(2));
 
+            } else {
+                throw new Error('Falha ao obter os dados.');
             }
-
-            throw new Error('Falha ao obter os dados.');
 
         } catch (error) {
             console.error(error);
